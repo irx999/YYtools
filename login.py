@@ -8,6 +8,7 @@ def login(page:ft.Page):
     page.window_always_on_top = True
     page.window_opacity = 0.95
     page.window_maximizable = True #双击是否会变大
+    page.window_frameless = True
     # page.vertical_alignment = ft.MainAxisAlignment.CENTER
     # page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 
