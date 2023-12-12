@@ -1,57 +1,16 @@
 
 import flet as ft
-import NavigationRail 
-NavigationRail = NavigationRail.NavigationRail()
 
 
+from time import sleep
 
-def login(page:ft.Page):
-    page.window_width = 300      # window's width is 200 px
-    page.window_height = 450  
-    page.window_always_on_top = True
-    page.window_opacity = 0.95
-    page.window_maximizable = False
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.window_center()
-
-    page.title = "账户验证"
-    
-
-    def textbox_changed(e):
-        t.value = "hello , " + e.control.value
-        page.update()
-        
-    def login_bt_1(e):
-        print(username.value,password.value)
-        if username.value == "123" and password.value =="123":
-            print("密码正确")
-            main.page.window_visible = True
-
-    t  = ft.Text(
-            "Welcome, Please login in",
-            size=40, )
-           
-    username  = ft.TextField(
-        label="账户名:",
-        on_change=textbox_changed,
-    )
-
-    password = ft.TextField(
-            label="Enter-Your-pin", password=True, can_reveal_password=True
-        )
-    login_bt =  ft.ElevatedButton(text="Elevated button",on_click= login_bt_1)
-    page.add(ft.Column([t,username,password,login_bt],alignment=ft)
-        )
-    
-    
-    page.update()
 
 def main(page:ft.Page):
 
     # 页面大小 等控制
-    page.window_width = 800      # window's width is 200 px
-    page.window_height = 500  
+    page.window_center()
+    page.window_width = 1200      # window's width is 200 px
+    page.window_height = 800  
     page.window_always_on_top = True
     page.window_opacity = 1
     page.window_maximizable = False
@@ -82,7 +41,10 @@ def main(page:ft.Page):
     def check_item_clicked(e):
         e.control.checked = not e.control.checked
         print("终端待开发")
-        page.update()
+
+        
+    def windowClosing(e):
+        page.window_close()
 
 
 
@@ -91,7 +53,7 @@ def main(page:ft.Page):
         leading=ft.Icon(ft.icons.BALLOT),
         leading_width=10,
         toolbar_height = 40,
-        title=ft.Text("━━(￣ー￣*|||━━",),
+        title=ft.Text("    QVQ",),
         center_title=False,
         bgcolor=ft.colors.SURFACE_VARIANT,
         actions=[
@@ -99,11 +61,13 @@ def main(page:ft.Page):
             ft.IconButton(ft.icons.FILTER_3),
             ft.PopupMenuButton(
                 items=[
-                    ft.PopupMenuItem(text="控件1 代开发"),
-                    ft.PopupMenuItem(),  # divider
+                    ft.PopupMenuItem(text="控件1 待开发"),
+                    ft.PopupMenuItem(icon= ft.icons.OUTBOND,text="退出",checked= False,on_click = windowClosing ),
+                    ft.PopupMenuItem(),  # divider 空行
                     ft.PopupMenuItem(
                         text="是否显示终端", checked=True, on_click=check_item_clicked
                     ),
+                    
                 ]
             ),
         ],
@@ -112,11 +76,13 @@ def main(page:ft.Page):
     
 
 
-
+    import NavigationRail 
+    NavigationRail = NavigationRail.NavigationRail(page)
     page.add(NavigationRail
         )
 
-    
+    sleep(3)
+    page.update()
 
 
 
@@ -125,6 +91,7 @@ def main(page:ft.Page):
 
 if __name__ == "__main__":
     
-    ft.app(main,)
+    # ft.app(main,view=ft.AppView.FLET_APP_HIDDEN)
+    ft.app(main)
     
     
