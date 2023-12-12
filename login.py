@@ -33,6 +33,7 @@ def login(page:ft.Page):
             # 主程序启动
             ft.app(main)
             page.window_close()
+        
         else:
             t.value = "密码错误, " + username.value
             page.update()
