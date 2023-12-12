@@ -5,10 +5,30 @@ name = "NavigationRail Example"
 
 def NavigationRail(page:ft.Page):
     
-    page1 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "12312312312")
+    pagelist = [ft.Container(
+                content=ft.Column(
+                    [
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.ALBUM),
+                            title=ft.Text("页面一功能开发区域"),
+                            subtitle=ft.Text(
+                                "Music by Julie Gable. Lyrics by Sidney Stein."
+                            ),
+                        ),
+                        ft.Row(
+                            [ft.TextButton("Buy tickets"), ft.TextButton("Listen")],
+                            alignment=ft.MainAxisAlignment.END,
+                        ),
+                    ]
+                ),
+                width=400,
+                padding=10,
+            ),ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2")]
+    card = ft.Card(pagelist[0])
+    
     def modifyingPages(e):
-        
-        page1.text = e.control.selected_index
+        global page1
+        card.content = pagelist[e.control.selected_index]
         print(e.control.selected_index)
         page.update()
         
@@ -47,8 +67,8 @@ def NavigationRail(page:ft.Page):
             [
                 rail,
                 ft.VerticalDivider(width=0),
-                ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "123"),
-                page1 
+                
+                card
                
             ],
             expand=True,
