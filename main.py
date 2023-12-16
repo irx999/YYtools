@@ -16,7 +16,7 @@ def main(page:ft.Page):
     page.window_maximizable = False
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.window_frameless = True
+    page.window_frameless = False
 
     page.title = "运营工具箱V0.0.1.1"
 

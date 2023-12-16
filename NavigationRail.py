@@ -4,6 +4,10 @@ import flet as ft
 name = "NavigationRail Example"
 
 def NavigationRail(page:ft.Page):
+
+    page2 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2",on_click= lambda __: print(123))
+    def a():
+        page2.text = 123
     
     pagelist = [ft.Container(
                 content=ft.Column(
@@ -16,14 +20,14 @@ def NavigationRail(page:ft.Page):
                             ),
                         ),
                         ft.Row(
-                            [ft.TextButton("Buy tickets"), ft.TextButton("Listen")],
+                            [ft.TextButton("Buy tickets"), ft.TextButton("Listen",on_click= lambda: [setattr(page2, 'text', 123), page.update()][0])],
                             alignment=ft.MainAxisAlignment.END,
                         ),
                     ]
                 ),
                 width=400,
                 padding=10,
-            ),ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2")]
+            ),page2]
     card = ft.Card(pagelist[0])
     
     def modifyingPages(e):

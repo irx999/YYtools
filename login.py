@@ -24,12 +24,10 @@ def login(page:ft.Page):
     def login_authentication(e):
         print(username.value,password.value)
         if username.value == "123" and password.value =="123":
-            print("密码正确")
+            print("密码正确,qvq")
             
             page.window_visible = False
             page.update()
-
-
             # 主程序启动
             ft.app(main)
             page.window_close()
