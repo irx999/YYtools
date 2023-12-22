@@ -1,6 +1,7 @@
 import flet as ft
 from time import sleep
 from main import main
+import hashlib,requests
 
 def login(page:ft.Page):
     page.window_width = 300      # window's width is 200 px
@@ -13,6 +14,7 @@ def login(page:ft.Page):
     # page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 
     page.title = "账户验证"
+    
 
     page.window_center()
     
@@ -20,16 +22,38 @@ def login(page:ft.Page):
     def textbox_changed(e):
         t.value = "hello , " + e.control.value
         page.update()
+    # 密码验证
+    def generate_md5_hash(password):
+        md5 = hashlib.md5()
+        md5.update(password.encode('utf-8'))
+        return md5.hexdigest()
         
     def login_authentication(e):
-        print(username.value,password.value)
-        if username.value == "123" and password.value =="123":
-            print("密码正确,qvq")
-            
+        loading.visible = True
+        page.update()
+        true_pw = requests.get("https://irx999.fun/pw.php").text.replace("\n","")
+        pw = str(username.value+password.value)
+        print(pw)
+        input_pw = str(generate_md5_hash(pw))
+        print(input_pw)
+        print(input_pw==true_pw)
+
+        sleep(0.5)
+        loading.visible = False
+        page.update()
+        
+    
+        if  input_pw==true_pw:
+            loading2.visible = True
+            page.update()
+            sleep(0.3)
             page.window_visible = False
             page.update()
+            
             # 主程序启动
             ft.app(main)
+            
+            
             page.window_close()
         
         else:
@@ -48,12 +72,19 @@ def login(page:ft.Page):
             label="Enter-Your-pin", password=True, can_reveal_password=True
         )
     login_bt =  ft.ElevatedButton(text="log in",on_click= login_authentication,)
-    out_bt = ft.ElevatedButton(text="log in",on_click= lambda __ : page.window_destroy(),)
+    out_bt = ft.ElevatedButton(text="leave",on_click= lambda __ : page.window_destroy(),)
+
+    loading = ft.ProgressBar(width=400, color="blue", bgcolor="#eeeeee")
+    loading2 = ft.ProgressRing()
 
     #登录页面定义
+    loading.visible = False
+    loading2.visible = False
     page.add(ft.Column(
         [t,username,password,
-         ft.Row([login_bt,out_bt],alignment=ft.MainAxisAlignment.CENTER)]
+         ft.Row([login_bt,out_bt],alignment=ft.MainAxisAlignment.CENTER),
+         ft.Row([loading,loading2],alignment=ft.MainAxisAlignment.CENTER)
+         ]
          )
         )
     

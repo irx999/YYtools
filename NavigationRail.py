@@ -80,7 +80,7 @@ def NavigationRail(page:ft.Page):
 
 
     rail = ft.NavigationRail(
-        selected_index=0,
+        # selected_index=0,
         label_type=ft.NavigationRailLabelType.ALL,
         # extended=True,
         min_width=100,
@@ -89,7 +89,8 @@ def NavigationRail(page:ft.Page):
         group_alignment=1,
         destinations=[
             ft.NavigationRailDestination(
-                icon=ft.icons.FAVORITE_BORDER, selected_icon=ft.icons.TIKTOK, label="抖音"
+                icon=ft.icons.FAVORITE_BORDER,
+                selected_icon=ft.icons.TIKTOK, label="抖音"
             ),
             ft.NavigationRailDestination(
                 icon_content=ft.Icon(ft.icons.BOOKMARK_BORDER),
