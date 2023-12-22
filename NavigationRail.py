@@ -26,8 +26,56 @@ def NavigationRail(page:ft.Page):
 
 
 
-    page0 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "主页面",on_click= lambda __: print("页面按钮被按下"))
-    page1 = ft.Container(
+    page0 = ft.Row(
+            [
+                ft.Container(
+                    content=ft.Text("Non clickable"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    bgcolor=ft.colors.AMBER,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                ),
+                ft.Container(
+                    content=ft.Text("Clickable without Ink"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    bgcolor=ft.colors.GREEN_200,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                    on_click=lambda e: print("Clickable without Ink clicked!"),
+                ),
+                ft.Container(
+                    content=ft.Text("Clickable with Ink"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    bgcolor=ft.colors.CYAN_200,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                    ink=True,
+                    on_click=lambda e: print("Clickable with Ink clicked!"),
+                ),
+                ft.Container(
+                    content=ft.Text("Clickable transparent with Ink"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                    ink=True,
+                    on_click=lambda e: print("Clickable transparent with Ink clicked!"),
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+    page1 = ft.Row([ft.Container(
                 content=ft.Column(
                     [
                         ft.ListTile(
@@ -41,35 +89,39 @@ def NavigationRail(page:ft.Page):
                             ft.IconButton(
                                     icon=ft.icons.NOT_STARTED,
                                     icon_size = 50,
-                                    selected_icon=ft.icons.NOT_STARTED_OUTLINED,
+                                    selected_icon=ft.icons.PAUSE_CIRCLE_ROUNDED,
                                     on_click=run_terminal_program,
                                     selected=False,
-                                    style=ft.ButtonStyle(color={"selected": ft.colors.GREEN, "": ft.colors.RED})),
-                            
-        
-                            
+                                    style=ft.ButtonStyle(color={"selected": ft.colors.RED, "": ft.colors.GREEN})),
+
                              ],
                             alignment=ft.MainAxisAlignment.END,
                         ),
                     ]
                 ),
-                width=400,
-                height=300,
+                margin=10,
                 padding=10,
-                alignment= ft.alignment.center_right
-            )
+                alignment=ft.alignment.center,
+                bgcolor=ft.colors.BLUE_100,
+                width=240,
+                height=180,
+                border_radius=10,
+                ink=True,
+                ),],
+                alignment=ft.MainAxisAlignment.START)
+               
+            
 
     page2 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2",on_click= lambda __: (setattr(page3, 'text', 123), page.update()))
-    page3 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面3",on_click= lambda __: print("页面按钮被按下"))
     
-
+    page3 = page0
     
     pagelist = [page0,
                 page1,
                 page2,
                 page3
             ]
-    card = ft.Card(pagelist[0])
+    card = ft.Container(pagelist[0],height=800,width=1000,alignment=ft.alignment.top_left)
     
     def modifyingPages(e):
         card.content = pagelist[e.control.selected_index+1]
@@ -117,6 +169,6 @@ def NavigationRail(page:ft.Page):
                
             ],
             expand=True,
-            alignment= ft.alignment.center_left
+            alignment= ft.alignment.top_right
         )
     
