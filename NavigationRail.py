@@ -3,7 +3,25 @@ import flet as ft
 
 name = "NavigationRail Example"
 
+process  =None
 def NavigationRail(page:ft.Page):
+
+    import subprocess
+
+    def run_terminal_program(e):
+    # 使用subprocess.run启动终端程序
+        print("运行")
+        if not hasattr(run_terminal_program, 'has_run'):
+            run_terminal_program.has_run = True
+            print("This function will only run once.")
+            global process
+            process = subprocess.Popen(("mitmdump  -s addons.py"), shell=False)
+        else:
+            print("My function has already run.")
+            process.terminate()
+            del run_terminal_program.has_run
+            process = None
+
 
 
     page0 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "主页面",on_click= lambda __: print("页面按钮被按下"))
@@ -18,8 +36,8 @@ def NavigationRail(page:ft.Page):
                             ),
                         ),
                         ft.Row([
-                            ft.TextButton("启动",on_click= lambda __: (setattr(page2, 'text', 123), page.update())), 
-                            ft.TextButton("关闭",on_click= lambda __: (setattr(page2, 'text', 123), page.update()))
+                            ft.TextButton("启动",on_click= run_terminal_program), 
+                            ft.TextButton("关闭",on_click= run_terminal_program)
                              ],
                             alignment=ft.MainAxisAlignment.END,
                         ),
