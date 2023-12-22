@@ -9,6 +9,8 @@ def NavigationRail(page:ft.Page):
     import subprocess
 
     def run_terminal_program(e):
+        e.control.selected = not e.control.selected
+        e.control.update()
     # 使用subprocess.run启动终端程序
         print("运行")
         if not hasattr(run_terminal_program, 'has_run'):
@@ -36,8 +38,16 @@ def NavigationRail(page:ft.Page):
                             ),
                         ),
                         ft.Row([
-                            ft.TextButton("启动",on_click= run_terminal_program), 
-                            ft.TextButton("关闭",on_click= run_terminal_program)
+                            ft.IconButton(
+                                    icon=ft.icons.NOT_STARTED,
+                                    icon_size = 50,
+                                    selected_icon=ft.icons.NOT_STARTED_OUTLINED,
+                                    on_click=run_terminal_program,
+                                    selected=False,
+                                    style=ft.ButtonStyle(color={"selected": ft.colors.GREEN, "": ft.colors.RED})),
+                            
+        
+                            
                              ],
                             alignment=ft.MainAxisAlignment.END,
                         ),
@@ -79,7 +89,7 @@ def NavigationRail(page:ft.Page):
         group_alignment=1,
         destinations=[
             ft.NavigationRailDestination(
-                icon=ft.icons.FAVORITE_BORDER, selected_icon=ft.icons.FAVORITE, label="First"
+                icon=ft.icons.FAVORITE_BORDER, selected_icon=ft.icons.TIKTOK, label="抖音"
             ),
             ft.NavigationRailDestination(
                 icon_content=ft.Icon(ft.icons.BOOKMARK_BORDER),

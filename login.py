@@ -48,11 +48,12 @@ def login(page:ft.Page):
             label="Enter-Your-pin", password=True, can_reveal_password=True
         )
     login_bt =  ft.ElevatedButton(text="log in",on_click= login_authentication,)
+    out_bt = ft.ElevatedButton(text="log in",on_click= lambda __ : page.window_destroy(),)
 
     #登录页面定义
     page.add(ft.Column(
         [t,username,password,
-         ft.Row([login_bt],alignment=ft.MainAxisAlignment.CENTER)]
+         ft.Row([login_bt,out_bt],alignment=ft.MainAxisAlignment.CENTER)]
          )
         )
     
