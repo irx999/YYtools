@@ -141,8 +141,8 @@ def NavigationRail(page:ft.Page):
         group_alignment=1,
         destinations=[
             ft.NavigationRailDestination(
-                icon=ft.icons.FAVORITE_BORDER,
-                selected_icon=ft.icons.TIKTOK, label="抖音"
+                icon=ft.icons.TIKTOK,
+                selected_icon=ft.icons.TIKTOK_OUTLINED, label="抖音"
             ),
             ft.NavigationRailDestination(
                 icon_content=ft.Icon(ft.icons.BOOKMARK_BORDER),
