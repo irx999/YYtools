@@ -5,34 +5,46 @@ name = "NavigationRail Example"
 
 def NavigationRail(page:ft.Page):
 
-    page2 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2",on_click= lambda __: print(123))
-    def a():
-        page2.text = 123
-    
-    pagelist = [ft.Container(
+
+    page0 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "主页面",on_click= lambda __: print("页面按钮被按下"))
+    page1 = ft.Container(
                 content=ft.Column(
                     [
                         ft.ListTile(
                             leading=ft.Icon(ft.icons.ALBUM),
-                            title=ft.Text("页面一功能开发区域"),
+                            title=ft.Text("抖音数据抓取启动器"),
                             subtitle=ft.Text(
-                                "Music by Julie Gable. Lyrics by Sidney Stein."
+                                "内部测试阶段,"
                             ),
                         ),
-                        ft.Row(
-                            [ft.TextButton("Buy tickets"), ft.TextButton("Listen",on_click= lambda: [setattr(page2, 'text', 123), page.update()][0])],
+                        ft.Row([
+                            ft.TextButton("启动",on_click= lambda __: (setattr(page2, 'text', 123), page.update())), 
+                            ft.TextButton("关闭",on_click= lambda __: (setattr(page2, 'text', 123), page.update()))
+                             ],
                             alignment=ft.MainAxisAlignment.END,
                         ),
                     ]
                 ),
                 width=400,
+                height=300,
                 padding=10,
-            ),page2]
+                alignment= ft.alignment.center_right
+            )
+
+    page2 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2",on_click= lambda __: (setattr(page3, 'text', 123), page.update()))
+    page3 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面3",on_click= lambda __: print("页面按钮被按下"))
+    
+
+    
+    pagelist = [page0,
+                page1,
+                page2,
+                page3
+            ]
     card = ft.Card(pagelist[0])
     
     def modifyingPages(e):
-        global page1
-        card.content = pagelist[e.control.selected_index]
+        card.content = pagelist[e.control.selected_index+1]
         print(e.control.selected_index)
         page.update()
         
@@ -45,7 +57,7 @@ def NavigationRail(page:ft.Page):
         # extended=True,
         min_width=100,
         min_extended_width=200,
-        leading=ft.FloatingActionButton(icon=ft.icons.CREATE, text="Add"),
+        leading=ft.FloatingActionButton(icon=ft.icons.DATASET_ROUNDED, text="主页面",on_click= lambda __: (setattr(card,"content",pagelist[0]),page.update())),
         group_alignment=1,
         destinations=[
             ft.NavigationRailDestination(

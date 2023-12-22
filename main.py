@@ -17,6 +17,8 @@ def main(page:ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.window_frameless = False
+    page.window_maximizable = False
+
 
     page.title = "运营工具箱V0.0.1.1"
 
@@ -37,7 +39,7 @@ def main(page:ft.Page):
         )
         page.update()
     c =ft.Switch(label="Light theme", on_change=theme_changed)
-    page.theme_mode =ft.ThemeMode.LIGHT
+    page.theme_mode =ft.ThemeMode.SYSTEM
 
     def check_item_clicked(e):
         e.control.checked = not e.control.checked
@@ -50,7 +52,7 @@ def main(page:ft.Page):
         leading=ft.Icon(ft.icons.BALLOT),
         leading_width=10,
         toolbar_height = 40,
-        title=ft.Text("    QVQ",),
+        title=ft.Text("  测试",),
         center_title=False,
         bgcolor=ft.colors.SURFACE_VARIANT,
         actions=[
@@ -70,7 +72,6 @@ def main(page:ft.Page):
                     
                 ],icon=ft.icons.FILTER_3
             ),
-            ft.IconButton(icon= ft.icons.CLOSE,on_click = lambda __: page.window_destroy() ),
         ],
     )
 
