@@ -1,10 +1,33 @@
 
 import flet as ft
-
+import pyperclip
 name = "NavigationRail Example"
-
+from time import sleep
 process  =None
 def NavigationRail(page:ft.Page):
+    def on_keyboard(e: ft.KeyboardEvent):
+        
+        if e.key ==shortcutKey.value:
+            clipboard_content = pyperclip.paste ()
+            number_list = clipboard_content.split()  # 将字符串分割成列表
+            unique_numbers = []
+            for num in number_list:
+                if num not in unique_numbers:
+                    unique_numbers.append(num)
+
+            result = ",".join(unique_numbers)  # 用逗号连接列表中的元素
+            pyperclip.copy(result)
+            prompt(f"已经成功复制\n{result}")
+            sleep(2)
+            page.banner.open = False
+            
+            page.update()
+
+    page.on_keyboard_event = on_keyboard
+
+
+
+
 
     import subprocess
 
@@ -23,6 +46,54 @@ def NavigationRail(page:ft.Page):
             process.terminate()
             del run_terminal_program.has_run
             process = None
+
+    def close_banner(e):
+        page.banner.open = False
+        page.update()
+    customPrompt = ft.Text(
+            "Oops, there were some errors while trying to delete the file. What would you like me to do?"
+            ,size= 30,
+
+        )
+
+    page.banner = ft.Banner(
+        bgcolor=ft.colors.AMBER_100,
+        leading=ft.Icon(ft.icons.WARNING_AMBER_ROUNDED, color=ft.colors.AMBER, size=30),
+        content=customPrompt,
+        actions=[
+            ft.TextButton("确定", on_click=close_banner),
+            ft.TextButton("我知道了", on_click=close_banner),
+            ft.TextButton("关闭", on_click=close_banner)
+        ],
+    )
+    def prompt(a):
+        customPrompt.value =  a
+        page.banner.open = True
+        page.update()
+
+    shortcutKey = ft.Dropdown(
+        label="快捷键",
+        on_change=  lambda ___:   prompt("快捷键已经切换"),
+        value= "F2",
+        options=[
+            ft.dropdown.Option("F1"),
+            ft.dropdown.Option("F2"),
+        ],
+        width=200,
+    )
+
+    
+
+    timeCarrier = ft.Dropdown(
+        label="时间载体",
+        on_change=  lambda ___:   prompt("没写可以切换的代码"),
+        value= "自然日",
+        options=[
+            ft.dropdown.Option("自然日"),
+            ft.dropdown.Option("近7日"),
+        ],
+        width=200,
+    )
 
 
 
@@ -62,7 +133,7 @@ def NavigationRail(page:ft.Page):
                     on_click=lambda e: print("Clickable with Ink clicked!"),
                 ),
                 ft.Container(
-                    content=ft.Text("Clickable transparent with Ink"),
+                    content=ft.Column([ft.Text("数据净化"),shortcutKey]),
                     margin=10,
                     padding=10,
                     alignment=ft.alignment.center,
@@ -85,7 +156,8 @@ def NavigationRail(page:ft.Page):
                                 "内部测试阶段,"
                             ),
                         ),
-                        ft.Row([
+                        ft.Row([timeCarrier
+                            ,
                             ft.IconButton(
                                     icon=ft.icons.NOT_STARTED,
                                     icon_size = 50,
@@ -103,7 +175,7 @@ def NavigationRail(page:ft.Page):
                 padding=10,
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.BLUE_100,
-                width=240,
+                width=300,
                 height=180,
                 border_radius=10,
                 ink=True,

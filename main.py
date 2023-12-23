@@ -40,7 +40,7 @@ def main(page:ft.Page):
         page.update()
     c =ft.Switch(label="Light theme", on_change=theme_changed)
     page.theme_mode =ft.ThemeMode.SYSTEM
-
+    #
     def check_item_clicked(e):
         e.control.checked = not e.control.checked
         print("终端待开发")
@@ -103,8 +103,8 @@ def main(page:ft.Page):
         title=ft.Text("Please confirm"),
         content=ft.Text("Do you really want to exit this app?"),
         actions=[
-            ft.ElevatedButton("Yes", on_click=yes_click),
-            ft.OutlinedButton("No", on_click=no_click),
+            ft.OutlinedButton("Yes", on_click=yes_click),
+            ft.ElevatedButton("No", on_click=no_click),
         ],
         actions_alignment=ft.MainAxisAlignment.END,
     )
