@@ -5,6 +5,10 @@ name = "NavigationRail Example"
 from time import sleep
 process  =None
 def NavigationRail(page:ft.Page):
+
+
+    #键盘事件部分
+
     def on_keyboard(e: ft.KeyboardEvent):
         
         if e.key ==shortcutKey.value:
@@ -70,7 +74,8 @@ def NavigationRail(page:ft.Page):
         customPrompt.value =  a
         page.banner.open = True
         page.update()
-
+    
+    #键盘切换
     shortcutKey = ft.Dropdown(
         label="快捷键",
         on_change=  lambda ___:   prompt("快捷键已经切换"),
@@ -146,9 +151,56 @@ def NavigationRail(page:ft.Page):
             ],
             alignment=ft.MainAxisAlignment.CENTER,
         )
+    # 抖音页面相关
+    timeCarrier = ft.Dropdown(
+        label="时间载体",
+        on_change=  lambda ___:   prompt("没写可以切换的代码"),
+        value= "自然日",
+        options=[
+            ft.dropdown.Option("自然日"),
+            ft.dropdown.Option("近7日"),
+        ],
+        width=200,)
+    
+    url = ft.TextField(label="URL:",width=280,multiline= True,min_lines=1,max_lines=1,text_size=10,)
+    sku =  ft.TextField(label="SKU",width=280,multiline = True,min_lines=1,max_lines=2,text_size=10)
+
+    
+    startFrequency = ft.Slider(
+            round= 1,
+            divisions=20,
+            value= 0.5,
+            min= 0.001,
+            max=2,
+            label="{value}秒",
+            width=150
+            
+        )
+    
+
+
+    def openMultipleWebPages(e):
+        # print(url.value,sku.value,startFrequency.value)
+        print(url.value)
+        import webbrowser
+        skuurls = sku.value.split(",")
+        print(startFrequency.value)
+        
+        
+        if skuurls == []:
+            pass
+        else:
+            for i in skuurls:
+                webbrowser.open(f'{url.value}{i}')
+                sleep(startFrequency.value)
+
+
+
+
+
+
     page1 = ft.Row([ft.Container(
-                content=ft.Column(
-                    [
+                content=ft.Column( [
                         ft.ListTile(
                             leading=ft.Icon(ft.icons.ALBUM),
                             title=ft.Text("抖音数据抓取启动器"),
@@ -167,7 +219,7 @@ def NavigationRail(page:ft.Page):
                                     style=ft.ButtonStyle(color={"selected": ft.colors.RED, "": ft.colors.GREEN})),
 
                              ],
-                            alignment=ft.MainAxisAlignment.END,
+                            alignment=ft.MainAxisAlignment.START,
                         ),
                     ]
                 ),
@@ -176,10 +228,37 @@ def NavigationRail(page:ft.Page):
                 alignment=ft.alignment.center,
                 bgcolor=ft.colors.BLUE_100,
                 width=300,
-                height=180,
+                height=240,
                 border_radius=10,
                 ink=True,
-                ),],
+                ),
+                ft.Container(
+                content=ft.Column(
+                    [
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.OPEN_IN_BROWSER_OUTLINED),
+                            title=ft.Text("批量链接打开工具"),
+                            height= 40
+
+                        ),
+                        ft.Column([ft.Column([url,sku,]),
+                                ft.Row([startFrequency,ft.ElevatedButton("启动",icon="WEBHOOK_OUTLINED",icon_color="green400",on_click=openMultipleWebPages)])
+                             ],
+                            alignment=ft.MainAxisAlignment.START,
+                        ),
+                    ]
+                ),
+                margin=10,
+                padding=10,
+                alignment=ft.alignment.center,
+                bgcolor=ft.colors.BLUE_100,
+                width=300,
+                height =240,
+                # expand = True,
+                border_radius=10,
+
+                ink=True,
+                )],
                 alignment=ft.MainAxisAlignment.START)
                
             
