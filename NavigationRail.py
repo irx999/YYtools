@@ -178,7 +178,7 @@ def NavigationRail(page:ft.Page):
         )
     
 
-
+    # 多个连接打开函数
     def openMultipleWebPages(e):
         # print(url.value,sku.value,startFrequency.value)
         print(url.value)
@@ -199,7 +199,8 @@ def NavigationRail(page:ft.Page):
 
 
 
-    page1 = ft.Row([ft.Container(
+    #抖音数据抓取启动器
+    dy_tool_1 = ft.Container(
                 content=ft.Column( [
                         ft.ListTile(
                             leading=ft.Icon(ft.icons.ALBUM),
@@ -231,8 +232,12 @@ def NavigationRail(page:ft.Page):
                 height=240,
                 border_radius=10,
                 ink=True,
-                ),
-                ft.Container(
+                )
+    
+
+
+    # 批量链接打开工具
+    dy_tool_2 = ft.Container(
                 content=ft.Column(
                     [
                         ft.ListTile(
@@ -250,19 +255,71 @@ def NavigationRail(page:ft.Page):
                 ),
                 margin=10,
                 padding=10,
-                alignment=ft.alignment.center,
+                alignment=ft.alignment.top_center,
                 bgcolor=ft.colors.BLUE_100,
                 width=300,
-                height =240,
+                height =600,
                 # expand = True,
                 border_radius=10,
-
+                on_click= lambda  __: (setattr(dy_tool_2, 'height', 600) if dy_tool_2.height == 240 else setattr(dy_tool_2, 'height', 240),page.update()),
+                # on_click= lambda __ : print(dy_tool_2.height),
                 ink=True,
-                )],
-                alignment=ft.MainAxisAlignment.START)
-               
-            
+                )
 
+
+    page0 = ft.Row(
+            [
+                ft.Container(
+                    content=ft.Text("Non clickable"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    bgcolor=ft.colors.AMBER,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                ),
+                ft.Container(
+                    content=ft.Text("Clickable without Ink"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    bgcolor=ft.colors.GREEN_200,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                    on_click=lambda e: print("Clickable without Ink clicked!"),
+                ),
+                ft.Container(
+                    content=ft.Text("Clickable with Ink"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    bgcolor=ft.colors.CYAN_200,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                    ink=True,
+                    on_click=lambda e: print("Clickable with Ink clicked!"),
+                ),
+                ft.Container(
+                    content=ft.Column([ft.Text("数据净化"),shortcutKey]),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                    ink=True,
+                    on_click=lambda e: print("Clickable transparent with Ink clicked!"),
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+
+    page1 = ft.Row([dy_tool_1,dy_tool_2],
+                alignment=ft.MainAxisAlignment.CENTER,)
+               
     page2 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2",on_click= lambda __: (setattr(page3, 'text', 123), page.update()))
     
     page3 = page0
@@ -270,9 +327,11 @@ def NavigationRail(page:ft.Page):
     pagelist = [page0,
                 page1,
                 page2,
-                page3
-            ]
-    card = ft.Container(pagelist[0],height=800,width=1000,alignment=ft.alignment.top_left)
+                page3]
+    card = ft.Container(pagelist[0],alignment=ft.alignment.top_left,
+                        # bgcolor= ft.colors.AMBER,
+                        # height= 700,width= 1031,expand= False
+                        )
     
     def modifyingPages(e):
         card.content = pagelist[e.control.selected_index+1]
@@ -280,7 +339,7 @@ def NavigationRail(page:ft.Page):
         page.update()
         
         
-
+    
 
     rail = ft.NavigationRail(
         # selected_index=0,
@@ -314,12 +373,13 @@ def NavigationRail(page:ft.Page):
     return    ft.Row(
             [
                 rail,
-                ft.VerticalDivider(width=0),
+                ft.VerticalDivider(width=2),
                 
                 card
                
             ],
             expand=True,
-            alignment= ft.alignment.top_right
+            alignment= ft.MainAxisAlignment.START
         )
+        
     
