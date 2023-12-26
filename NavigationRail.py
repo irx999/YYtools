@@ -4,6 +4,11 @@ import pyperclip
 name = "NavigationRail Example"
 from time import sleep
 process  =None
+
+stop_flag =True
+
+
+
 def NavigationRail(page:ft.Page):
 
 
@@ -142,16 +147,7 @@ def NavigationRail(page:ft.Page):
 
     
     
-    timeCarrier = ft.Dropdown(
-        label="时间载体",
-        on_change=  lambda ___:   prompt("没写可以切换的代码"),
-        value= "自然日",
-        options=[
-            ft.dropdown.Option("自然日"),
-            ft.dropdown.Option("近7日"),
-        ],
-        width=200,
-    )
+    
 
 
 
@@ -215,7 +211,8 @@ def NavigationRail(page:ft.Page):
         ],
         width=200,)
     
-    url = ft.TextField(label="URL:",width=280,multiline= True,min_lines=1,max_lines=1,text_size=10,)
+    url = ft.TextField(label="URL:",width=280,multiline= True,min_lines=1,max_lines=1,text_size=10,
+                       value= "compass.jinritemai.com/shop/product-detail?date_type=20&product_id=")
     sku =  ft.TextField(label="SKU",width=280,multiline = True,min_lines=1,max_lines=2,text_size=10)
 
     
@@ -226,35 +223,58 @@ def NavigationRail(page:ft.Page):
             min= 0.001,
             max=2,
             label="{value}秒",
-            width=150
+            width=130
             
         )
     
 
     # 多个连接打开函数
 
-    def openMultipleWebPages(e):
-        from selenium import webdriver
-        print(url.value)
-        skuurls = sku.value.split(",")
-        print(startFrequency.value)
+    
+    def terminateWebPrograms():
+        print("发起了终止")
+        global stop_flag
+        print(stop_flag)
+        stop_flag = False
+        
+        # stop_flag = True
 
+
+
+    def openMultipleWebPages(e):
+        global stop_flag
+        stop_flag  =True
+        
+        from selenium import webdriver
         proxy = "127.0.0.1:8080"
         options = webdriver.EdgeOptions()
-        options.add_argument('--proxy-server=%s'%proxy)
+        # options.add_argument('--proxy-server=%s'%proxy)
         driver = webdriver.Edge(options= options)
-        js="window.open('{}','_blank');"       
+        
+        print(url.value)
+        skuurls = sku.value.split(",")
+        js="window.open('{}{}','_blank');"       
         
         if skuurls == []:
             pass
         else:
+            driver.get("https://fxg.jinritemai.com/login/common")   
+
+            sleep(2)
             for i in skuurls:
                 # driver.get(f'{url.value}{i}')
                 # driver.get("http://y.irx999.fun/up/")
-                driver.execute_script(js.format('http://y.irx999.fun/up/'))
+                driver.execute_script(js.format(url.value,i))
 
                 sleep(startFrequency.value)
-
+            while True:
+                
+                print("等待终止程序")
+                sleep(2)
+                print(stop_flag)
+                if stop_flag == False:
+                    break
+    
 
 
 
@@ -308,7 +328,9 @@ def NavigationRail(page:ft.Page):
 
                         ),
                         ft.Column([ft.Column([url,sku,]),
-                                ft.Row([startFrequency,ft.ElevatedButton("启动",icon="WEBHOOK_OUTLINED",icon_color="green400",on_click=openMultipleWebPages)])
+                                ft.Row([startFrequency,
+                                        ft.ElevatedButton("启动",icon="WEBHOOK_OUTLINED",icon_color="green400",on_click=openMultipleWebPages),
+                                        ft.IconButton(icon=ft.icons.STOP_CIRCLE_OUTLINED,icon_color="red400",on_click=lambda __:(terminateWebPrograms()))])
                              ],
                             alignment=ft.MainAxisAlignment.START,
                         ),
