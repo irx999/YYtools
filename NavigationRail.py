@@ -232,19 +232,27 @@ def NavigationRail(page:ft.Page):
     
 
     # 多个连接打开函数
+
     def openMultipleWebPages(e):
-        # print(url.value,sku.value,startFrequency.value)
+        from selenium import webdriver
         print(url.value)
-        import webbrowser
         skuurls = sku.value.split(",")
         print(startFrequency.value)
-        
+
+        proxy = "127.0.0.1:8080"
+        options = webdriver.EdgeOptions()
+        options.add_argument('--proxy-server=%s'%proxy)
+        driver = webdriver.Edge(options= options)
+        js="window.open('{}','_blank');"       
         
         if skuurls == []:
             pass
         else:
             for i in skuurls:
-                webbrowser.open(f'{url.value}{i}')
+                # driver.get(f'{url.value}{i}')
+                # driver.get("http://y.irx999.fun/up/")
+                driver.execute_script(js.format('http://y.irx999.fun/up/'))
+
                 sleep(startFrequency.value)
 
 
@@ -314,7 +322,7 @@ def NavigationRail(page:ft.Page):
                 height =240,
                 # expand = True,
                 border_radius=10,
-                on_click= lambda  __: (setattr(dy_tool_2, 'height', 600) if dy_tool_2.height == 240 else setattr(dy_tool_2, 'height', 240),page.update()),
+                # on_click= lambda  __: (setattr(dy_tool_2, 'height', 600) if dy_tool_2.height == 240 else setattr(dy_tool_2, 'height', 240),page.update()),
                 # on_click= lambda __ : print(dy_tool_2.height),
                 ink=True,
                 )
