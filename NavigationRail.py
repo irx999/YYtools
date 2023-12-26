@@ -32,25 +32,78 @@ def NavigationRail(page:ft.Page):
 
 
 
-
+    #抖音程序启动终端程序
     import subprocess
-
-    def run_terminal_program(e):
+    def run_terminal_program__1(e):
         e.control.selected = not e.control.selected
         e.control.update()
     # 使用subprocess.run启动终端程序
         print("运行")
-        if not hasattr(run_terminal_program, 'has_run'):
-            run_terminal_program.has_run = True
+        if not hasattr(run_terminal_program__1, 'has_run'):
+            run_terminal_program__2.has_run = True
             print("This function will only run once.")
             global process
             process = subprocess.Popen(("mitmdump  -s addons.py"), shell=False)
         else:
             print("My function has already run.")
             process.terminate()
-            del run_terminal_program.has_run
+            del run_terminal_program__1.has_run
             process = None
 
+    def run_terminal_program__2(e):
+        e.control.selected = not e.control.selected
+        e.control.update()
+    # 使用subprocess.run启动终端程序
+        print("运行")
+        if not hasattr(run_terminal_program__2, 'has_run'):
+            run_terminal_program__2.has_run = True
+            print("This function will only run once.")
+            global process
+            process = subprocess.Popen(("mitmdump  -s addons.py"), shell=False)
+        else:
+            print("My function has already run.")
+            process.terminate()
+            del run_terminal_program__2.has_run
+            process = None
+
+
+
+
+    refresh_frequency = ft.Slider(
+            round= 0,
+            divisions=5,
+            value= 30,
+            min= 1,
+            max=120,
+            label="{value}分",
+            width=200
+            
+        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #关闭 banner
     def close_banner(e):
         page.banner.open = False
         page.update()
@@ -88,7 +141,7 @@ def NavigationRail(page:ft.Page):
     )
 
     
-
+    
     timeCarrier = ft.Dropdown(
         label="时间载体",
         on_change=  lambda ___:   prompt("没写可以切换的代码"),
@@ -215,7 +268,7 @@ def NavigationRail(page:ft.Page):
                                     icon=ft.icons.NOT_STARTED,
                                     icon_size = 50,
                                     selected_icon=ft.icons.PAUSE_CIRCLE_ROUNDED,
-                                    on_click=run_terminal_program,
+                                    on_click=run_terminal_program__1,
                                     selected=False,
                                     style=ft.ButtonStyle(color={"selected": ft.colors.RED, "": ft.colors.GREEN})),
 
@@ -258,14 +311,49 @@ def NavigationRail(page:ft.Page):
                 alignment=ft.alignment.top_center,
                 bgcolor=ft.colors.BLUE_100,
                 width=300,
-                height =600,
+                height =240,
                 # expand = True,
                 border_radius=10,
                 on_click= lambda  __: (setattr(dy_tool_2, 'height', 600) if dy_tool_2.height == 240 else setattr(dy_tool_2, 'height', 240),page.update()),
                 # on_click= lambda __ : print(dy_tool_2.height),
                 ink=True,
                 )
+    dy_tool_3= ft.Container(
+                content=ft.Column( [
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.ALBUM),
+                            title=ft.Text("售后数据抓取器"),
+                            subtitle=ft.Text(
+                                "内部测试阶段,"
+                            ),
+                        ),
+                        ft.Column([ft.TextField(label="机器人推送链接",width=280)
+                            ,
+                            ft.Row([refresh_frequency
+                                ,
+                            ft.IconButton(
+                                    icon=ft.icons.NOT_STARTED,
+                                    icon_size = 50,
+                                    selected_icon=ft.icons.PAUSE_CIRCLE_ROUNDED,
+                                    on_click=run_terminal_program__2,
+                                    selected=False,
+                                    style=ft.ButtonStyle(color={"selected": ft.colors.RED, "": ft.colors.GREEN})),
+                                    ])
 
+                             ],
+                            alignment=ft.MainAxisAlignment.START,
+                        ),
+                    ]
+                ),
+                margin=10,
+                padding=10,
+                alignment=ft.alignment.center,
+                bgcolor=ft.colors.BLUE_100,
+                width=300,
+                height=240,
+                border_radius=10,
+                ink=True,
+                )
 
     page0 = ft.Row(
             [
@@ -317,7 +405,7 @@ def NavigationRail(page:ft.Page):
             alignment=ft.MainAxisAlignment.CENTER,
         )
 
-    page1 = ft.Row([dy_tool_1,dy_tool_2],
+    page1 = ft.Row([dy_tool_1,dy_tool_2,dy_tool_3],
                 alignment=ft.MainAxisAlignment.CENTER,)
                
     page2 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2",on_click= lambda __: (setattr(page3, 'text', 123), page.update()))
@@ -347,7 +435,8 @@ def NavigationRail(page:ft.Page):
         # extended=True,
         min_width=100,
         min_extended_width=200,
-        leading=ft.FloatingActionButton(icon=ft.icons.DATASET_ROUNDED, text="主页面",on_click= lambda __: (setattr(card,"content",pagelist[0]),page.update())),
+        leading=ft.FloatingActionButton(icon=ft.icons.DATASET_ROUNDED, text="主页面",on_click= lambda __: 
+                                        (setattr(card,"content",pagelist[0]), setattr(rail,"selected_index",None)   ,page.update())),
         group_alignment=1,
         destinations=[
             ft.NavigationRailDestination(

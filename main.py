@@ -58,6 +58,7 @@ def main(page:ft.Page):
         actions=[
             ft.IconButton(ft.icons.WB_SUNNY_OUTLINED,on_click=theme_changed),
             ft.IconButton(icon = ft.icons.MINIMIZE_SHARP,on_click=lambda __: (setattr(page, 'window_minimized', True), page.update())),
+            
             ft.PopupMenuButton(
                 items=[
                     ft.PopupMenuItem(text="待开发",icon=ft.icons.CODE_OFF_OUTLINED),
@@ -72,6 +73,7 @@ def main(page:ft.Page):
                     
                 ],icon=ft.icons.FILTER_3
             ),
+            ft.IconButton(icon= ft.icons.CLOSE,on_click = lambda __: page.window_destroy() ),
         ],
     )
 
