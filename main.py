@@ -4,6 +4,8 @@ import flet as ft
 
 from time import sleep
 
+from  NavigationRail import process
+
 
 def main(page:ft.Page):
 

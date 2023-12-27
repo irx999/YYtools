@@ -43,12 +43,14 @@ def NavigationRail(page:ft.Page):
         e.control.selected = not e.control.selected
         e.control.update()
     # 使用subprocess.run启动终端程序
+        global process
         print("运行")
         if not hasattr(run_terminal_program__1, 'has_run'):
             run_terminal_program__2.has_run = True
             print("This function will only run once.")
-            global process
+            
             process = subprocess.Popen(("mitmdump  -s addons.py"), shell=False)
+            print(process)
         else:
             print("My function has already run.")
             process.terminate()

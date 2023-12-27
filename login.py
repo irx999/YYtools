@@ -17,6 +17,21 @@ def login(page:ft.Page):
     
 
     page.window_center()
+
+    #键盘事件
+    def on_keyboard(e: ft.KeyboardEvent):
+        
+        if e.key =="Enter":
+            login_authentication(e)
+        elif e.key == "ESC":
+            page.window_destroy()
+            print("退出")
+            
+            
+            
+            
+
+    page.on_keyboard_event = on_keyboard
     
 
     def textbox_changed(e):
