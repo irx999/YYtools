@@ -30,8 +30,8 @@ def NavigationRail(page:ft.Page):
     
 
     page.banner = ft.Banner(
-        bgcolor=ft.colors.AMBER_100,
-        leading=ft.Icon(ft.icons.WARNING_AMBER_ROUNDED, color=ft.colors.AMBER, size=30),
+        bgcolor=ft.colors.BLUE_100,
+        leading=ft.Icon(ft.icons.WARNING_AMBER_ROUNDED, color=ft.colors.BLUE_200, size=30),
         content=customPrompt,
         actions=[
             ft.TextButton("确定", on_click=close_banner),
