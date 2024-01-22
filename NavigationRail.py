@@ -171,14 +171,15 @@ def NavigationRail(page:ft.Page):
                                         (setattr(card,"content",pagelist[0]), setattr(rail,"selected_index",None)   ,page.update())),
         group_alignment=1,
         destinations=[
-            ft.NavigationRailDestination(
-                icon=ft.icons.TIKTOK,
-                selected_icon=ft.icons.TIKTOK_OUTLINED, label="抖音"
-            ),
+            
             ft.NavigationRailDestination(
                 icon_content=ft.Icon(ft.icons.BOOKMARK_BORDER),
                 selected_icon_content=ft.Icon(ft.icons.BOOKMARK),
                 label="Second",
+            ),
+            ft.NavigationRailDestination(
+                icon=ft.icons.TIKTOK,
+                selected_icon=ft.icons.TIKTOK_OUTLINED, label="抖音"
             ),
             ft.NavigationRailDestination(
                 icon=ft.icons.SETTINGS_OUTLINED,
@@ -190,6 +191,7 @@ def NavigationRail(page:ft.Page):
         on_change= modifyingPages
         
     )
+    
 
     return    ft.Row(
             [

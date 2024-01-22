@@ -12,11 +12,11 @@ def login(page:ft.Page):
     page.window_frameless = True
     # page.vertical_alignment = ft.MainAxisAlignment.CENTER
     # page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-
+    page.window_center()
     page.title = "账户验证"
     
 
-    page.window_center()
+    
 
     #键盘事件
     def on_keyboard(e: ft.KeyboardEvent):
@@ -92,13 +92,64 @@ def login(page:ft.Page):
     loading = ft.ProgressBar(width=400, color="blue", bgcolor="#eeeeee")
     loading2 = ft.ProgressRing()
 
+    
+    import subprocess
+
+    def install_packages(package_list):
+        subprocess.check_call(["pip", "install"] + package_list)
+
+    # 要安装的包的列表
+    packages_to_install = ["wakeonlan"]
+
+    def update_packages(e):
+
+        loading.visible = True
+        page.update()
+        try:
+            install_packages(packages_to_install)
+            
+            Updatebutton.visible =False
+            raise  Exception("123")
+
+        except Exception:
+            t.value = "更新失败 "
+            loading.visible = False
+            
+        finally:
+            page.update()
+
+        
+        
+
+
+
+    # 安装多个包
+    
+
+    
+    Updatebutton = ft.ElevatedButton("检测到缺失部件,请更新",icon="WEBHOOK_OUTLINED",icon_color="red400",on_click=update_packages)
+    Updatebutton.visible = False
+
+    try:
+        import  wakeonlan
+    except:
+        Updatebutton.visible = True
+        page.update()
+
+
+
+
+
+
     #登录页面定义
     loading.visible = False
     loading2.visible = False
     page.add(ft.Column(
         [t,username,password,
          ft.Row([login_bt,out_bt],alignment=ft.MainAxisAlignment.CENTER),
-         ft.Row([loading,loading2],alignment=ft.MainAxisAlignment.CENTER)
+         ft.Row([loading,loading2],alignment=ft.MainAxisAlignment.CENTER),
+         ft.Row([Updatebutton],alignment= ft.MainAxisAlignment.CENTER)
+
          ]
          )
         )
