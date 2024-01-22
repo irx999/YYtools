@@ -11,7 +11,7 @@ def main(page:ft.Page):
 
     # 页面大小 等控制
     page.window_center()
-    page.window_width = 1200      # window's width is 200 px
+    page.window_width = 1133      # window's width is 200 px
     page.window_height = 800  
     page.window_always_on_top = False
     page.window_opacity = 1
