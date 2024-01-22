@@ -15,12 +15,8 @@ def  douyinpage(page:ft.Page):
     def close_banner(e):
         page.banner.open = False
         page.update()
-    customPrompt = ft.Text(
-            "Oops, there were some errors while trying to delete the file. What would you like me to do?"
-            ,size= 30,
-
-        )
-
+    
+    from NavigationRail import customPrompt 
     page.banner = ft.Banner(
         bgcolor=ft.colors.AMBER_100,
         leading=ft.Icon(ft.icons.WARNING_AMBER_ROUNDED, color=ft.colors.AMBER, size=30),

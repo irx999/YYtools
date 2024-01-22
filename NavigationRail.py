@@ -6,14 +6,50 @@ from time import sleep
 process  =None
 
 stop_flag =True
+customPrompt = ft.Text(
+            "这是第二个页面的"
+            ,size= 30,
 
+        )
 
 
 def NavigationRail(page:ft.Page):
 
 
-    #键盘事件部分
+    
 
+    
+
+
+
+
+    #关闭 banner
+    def close_banner(e):
+        page.banner.open = False
+        page.update()
+    
+
+    page.banner = ft.Banner(
+        bgcolor=ft.colors.AMBER_100,
+        leading=ft.Icon(ft.icons.WARNING_AMBER_ROUNDED, color=ft.colors.AMBER, size=30),
+        content=customPrompt,
+        actions=[
+            ft.TextButton("确定", on_click=close_banner),
+            ft.TextButton("我知道了", on_click=close_banner),
+            ft.TextButton("关闭", on_click=close_banner)
+        ],
+    )
+    def prompt(a):
+        global customPrompt
+        customPrompt.value =  a
+        page.banner.open = True
+        page.update()
+        sleep(3)
+        page.banner.open = False
+        page.update()
+
+
+    #键盘事件部分
     def on_keyboard(e: ft.KeyboardEvent):
         
         if e.key ==shortcutKey.value:
@@ -46,38 +82,6 @@ def NavigationRail(page:ft.Page):
         ],
         width=200,
     )
-
-
-
-
-    #关闭 banner
-    def close_banner(e):
-        page.banner.open = False
-        page.update()
-    customPrompt = ft.Text(
-            "Oops, there were some errors while trying to delete the file. What would you like me to do?"
-            ,size= 30,
-
-        )
-
-    page.banner = ft.Banner(
-        bgcolor=ft.colors.AMBER_100,
-        leading=ft.Icon(ft.icons.WARNING_AMBER_ROUNDED, color=ft.colors.AMBER, size=30),
-        content=customPrompt,
-        actions=[
-            ft.TextButton("确定", on_click=close_banner),
-            ft.TextButton("我知道了", on_click=close_banner),
-            ft.TextButton("关闭", on_click=close_banner)
-        ],
-    )
-    def prompt(a):
-        customPrompt.value =  a
-        page.banner.open = True
-        page.update()
-        sleep(3)
-        page.banner.open = False
-        page.update()
-    
 
     
 
@@ -140,13 +144,13 @@ def NavigationRail(page:ft.Page):
     douyinpage  = douyinpage.douyinpage(page)
     
                
-    page2 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2",on_click= lambda __: (setattr(page3, 'text', 123), page.update()))
+    page1 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2",on_click= lambda __: (setattr(page3, 'text', 123), page.update()))
     
     page3 = page0
     
     pagelist = [page0,
+                page1,
                 douyinpage,
-                page2,
                 page3]
     card = ft.Container(pagelist[0],alignment=ft.alignment.top_center,
                         # bgcolor= ft.colors.AMBER,
