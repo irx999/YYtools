@@ -48,11 +48,7 @@ def login(page:ft.Page):
         page.update()
         true_pw = requests.get("https://irx999.fun/pw.php").text.replace("\n","")
         pw = str(username.value+password.value)
-        print(pw)
         input_pw = str(generate_md5_hash(pw))
-        print(input_pw)
-        print(input_pw==true_pw)
-
         sleep(0.5)
         loading.visible = False
         page.update()
@@ -109,10 +105,9 @@ def login(page:ft.Page):
             install_packages(packages_to_install)
             
             Updatebutton.visible =False
-            raise  Exception("123")
 
-        except Exception:
-            t.value = "更新失败 "
+        except Exception as e :
+            t.value = f"更新失败 {e}"
             loading.visible = False
             
         finally:
