@@ -1,6 +1,6 @@
 import flet as ft
 from time import sleep
-from main import main
+from main import start,main
 import hashlib,requests
 
 def login(page:ft.Page):
@@ -63,9 +63,8 @@ def login(page:ft.Page):
             
             # 主程序启动
             ft.app(main)
-            
-            
             page.window_close()
+            
         
         else:
             t.value = "密码错误, " + username.value

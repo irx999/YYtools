@@ -141,7 +141,9 @@ def NavigationRail(page:ft.Page):
 
 
     import douyinpage
+    import zhupage
     douyinpage  = douyinpage.douyinpage(page)
+    zhupage = zhupage.zhupage(page)
     
                
     page1 = ft.ElevatedButton(icon=ft.icons.SETTINGS,text= "页面2",on_click= lambda __: (setattr(page3, 'text', 123), page.update()))
@@ -149,7 +151,7 @@ def NavigationRail(page:ft.Page):
     page3 = page0
     
     pagelist = [page0,
-                page1,
+                zhupage,
                 douyinpage,
                 page3]
     card = ft.Container(pagelist[0],alignment=ft.alignment.top_center,

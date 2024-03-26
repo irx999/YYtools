@@ -18,7 +18,7 @@ def main(page:ft.Page):
     page.window_maximizable = False
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.window_frameless = False
+    page.window_frameless =  False
     page.window_maximizable = False
 
 
@@ -123,11 +123,13 @@ def main(page:ft.Page):
     page.show_banner
 
 
-
+def start():
+    import time
+    time.sleep(1)
+    ft.app(main)
 
 
 if __name__ == "__main__":
-    
-    # ft.app(main,view=ft.AppView.FLET_APP_HIDDEN)
-    ft.app(main)
+
+      ft.app(main)
     
