@@ -1,8 +1,10 @@
+from re import T
+from cv2 import log
 import flet as ft
 from time import sleep
 from main import start,main
 import hashlib,requests
-
+verification =False
 def login(page:ft.Page):
     page.window_width = 300      # window's width is 200 px
     page.window_height = 450  
@@ -62,9 +64,11 @@ def login(page:ft.Page):
             page.update()
             
             # 主程序启动
-            ft.app(main)
-            page.window_close()
             
+            page.window_close()
+            global verification
+            verification = True
+
         
         else:
             t.value = "密码错误, " + username.value
@@ -154,3 +158,5 @@ def login(page:ft.Page):
 
 if __name__ == "__main__":
     ft.app(login,)
+    if verification  == True:
+        ft.app(main)
